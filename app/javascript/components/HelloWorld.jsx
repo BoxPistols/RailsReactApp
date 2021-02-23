@@ -1,21 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class HelloWorld extends React.Component {
-	render() {
-		return (
-			<React.Fragment>
-				<h1>Greet!!</h1>
-				Greeting: {this.props.greeting}
-				<form>
-					<input type='text' placeholder={this.props.placeholder} />
-					<button onClick={console.log('Test')}>Submit</button>
-				</form>
-				<p>{this.props.result}</p>
-			</React.Fragment>
-		)
+function HelloWorld() {
+	// render() {
+	function handleClick(e) {
+		e.preventDefault()
+		console.log('The link was clicked.')
 	}
+	return (
+		<React.Fragment>
+			<h1>Greet!!</h1>
+			<form>
+				<button onClick={handleClick}>Submit</button>
+			</form>
+		</React.Fragment>
+	)
 }
+// }
 
 HelloWorld.defaultProps = {
 	placeholder: 'input...',

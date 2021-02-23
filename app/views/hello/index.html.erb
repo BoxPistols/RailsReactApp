@@ -1,6 +1,7 @@
-<%= javascript_pack_tag 'hello_react' %>
+<%# <%= javascript_pack_tag 'hello_react' %>
+<%# <div id="hello">#Hell</div> %>
 
-<h1>Hello#index</h1>
+<h1>Hello</h1>
 <p>Find me in app/views/hello/index.html.erb</p>
-<%= react_component("HelloWorld", { greeting: "Hello from react-rails.", result: "Dummy Result"}) %>
-<div id="hello"></div>
+
+<%= react_component("HelloWorld") %>

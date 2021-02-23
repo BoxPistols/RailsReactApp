@@ -6,21 +6,26 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
+const Hello = (props) => (
+	<div>
+		<hr />
+		<div>Hello {props.name}!</div>
+		<p>Age: {props.age}</p>
+	</div>
 )
 
 Hello.defaultProps = {
-  name: 'David'
+	name: 'David',
+	age: 32,
 }
 
 Hello.propTypes = {
-  name: PropTypes.string
+	name: PropTypes.string,
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
-  )
+	ReactDOM.render(
+		<Hello name='James' />,
+		document.body.appendChild(document.createElement('div'))
+	)
 })

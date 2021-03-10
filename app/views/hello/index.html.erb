@@ -3,10 +3,16 @@
 <h2><%= @title %></h2>
 <h3><%= @message %></h3>
 
-<form method="POST" action="/hello" >
-  <input type="text" name="input1" value="<%= @value %>" >
-  <input type="submit" >
-</form>
+<%# <form method="POST" action="/hello" > %>
+  <%# <input type="text" name="input1" value="<%= @value %>
+  <%# <input type="submit" > %>
+<%# </form> %>
+
+
+<%= form_tag(controller: "hello", action: "index") do %>
+  <%= text_field_tag("input1", "", {class: "form-control"}) %>
+  <%= submit_tag("送信する", {class: "btn btn-primary"}) %>
+<% end %>
 
 <%# <%= javascript_pack_tag 'hello_react' %>
 <%#= react_component("HelloWorld", { greeting: "Hello from react-rails.", result: "Dummy Result"}) %>

@@ -6,19 +6,26 @@ class HelloController < ApplicationController
     @message = "Message..."
     @value = ''
 
-    if params['msg'] != nil then
-      @title = 'Hello, ' + params['msg'] + '!'
-    else
-      @title = 'this is sample page'
-    end
+    # if params['msg'] != nil then
+    #   @title = 'Hello, ' + params['msg'] + '!'
+    # else
+    #   @title = 'this is sample page'
+    # end
 
     if request.post? then
       @title = "Result"
-      @message = 'You typed:' + params['input1']
-
-      @value = params['input1']
+      # for CheckBox
+      if params['input1']
+        @message = 'You Checked-1!'
+      else
+        @message = 'Not Checked!'
+      # @message = 'You typed:' + params['input1']
+      # @value = params['input1']
+      end
     else
-      @value = ''
+      @title = 'Index Page'
+      @message = 'Check it...!'
+      # @value = ''
     end
 
   end

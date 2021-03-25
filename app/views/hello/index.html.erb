@@ -1,4 +1,4 @@
-<h1>Hello React</h1>
+<%# <h1>Hello React</h1> %>
 
 <h2><%= @title %></h2>
 <h3><%= @message %></h3>
@@ -15,10 +15,6 @@
   <%# <%= submit_tag("送信する", {class: "btn btn-primary"}) %>
 <%# <% end %>
 
-<%= form_tag(controller: "hello", action: "index") do %>
-  <%= check_box_tag("input1", "", {class: "form-control"}) %>Check
-  <%= submit_tag("送信する", {class: "btn btn-primary"}) %>
-<% end %>
 
 <%# <%= javascript_pack_tag 'hello_react' %>
 <%#= react_component("HelloWorld", { greeting: "Hello from react-rails.", result: "Dummy Result"}) %>

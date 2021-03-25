@@ -22,3 +22,17 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+---
+
+# My Docs
+
+## GitBook/Rails
+
+https://atit.gitbook.io/rails/
+
+## DB Change:
+
+;https://atit.gitbook.io/rails/dbnorais6
+
+

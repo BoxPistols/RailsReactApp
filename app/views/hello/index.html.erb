@@ -1,20 +1,34 @@
-<%# <h1>Hello React</h1> %>
+<div class="container">
+  <div class="row mt-4">
+    <%# <h1>Hello React</h1> %>
 
-<h2><%= @title %></h2>
-<h3><%= @message %></h3>
+    <h2 class="display-2">Hello <%= @title %></h2>
+    <%
+=begin%>
+    <h3 class="display-3"><% @message %></h3>
+    <%
+=end%>
 
-<%# Default form with: protect_from_forgery on hello_controller for Security %>
-<%# <form method="POST" action="/hello" > %>
-  <%# <input type="text" name="input1" value="<%= @value %>
-  <%# <input type="submit" > %>
-<%# </form> %>
-
-<%# form-helper input-text %>
-<%# <%= form_tag(controller: "hello", action: "index") do %>
-  <%# <%= text_field_tag("input1", "", {class: "form-control"}) %>
-  <%# <%= submit_tag("送信する", {class: "btn btn-primary"}) %>
-<%# <% end %>
+    <%# Default form with: protect_from_forgery on hello_controller for Security %>
+    <h3 class="display-3"><%= @msg %></h3>
+    <form method="POST" action="/hello/index">
+      <input type="text" name="input1" value="<%= @value %>" class="form-control m-3">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
 
-<%# <%= javascript_pack_tag 'hello_react' %>
-<%#= react_component("HelloWorld", { greeting: "Hello from react-rails.", result: "Dummy Result"}) %>
+    <%
+=begin%>
+    // form-helper input-text
+    <%= form_tag(controller: "hello", action: "index") do %>
+    <%= text_field_tag("input1", "", {class: "form-control"}) %>
+    <%= submit_tag("送信する", {class: "btn btn-primary"}) %>
+    <%
+=end%>
+
+
+    <%# <%= javascript_pack_tag 'hello_react' %>
+    <%#= react_component("HelloWorld", { greeting: "Hello from react-rails.", result: "Dummy Result"}) %>
+
+  </div>
+</div>

@@ -2,21 +2,25 @@ class HelloController < ApplicationController
   protect_from_forgery
 
   def index
-    @title = "Title"
-    @message = "Message..."
-    @value = ''
 
     if params['msg'] != nil then
-      @title = '来たね！ ' + params['msg'] + 'さん！'
+      @msg = '来たね、 ' + params['msg'] + '！'
     else
-      @title = 'This is Default Title'
+      @msg = 'This is Default Title'
     end
 
-    # if request.post? then
-    #   @title = "Result"
-    #   # for CheckBox
-    #   if params['input1']
-    #     @message = 'You Checked-1!'
+    if request.post? then
+      @title = "Result"
+      @msg = 'You type:' + params['input1']
+      @value = params['input1']
+    else
+      @title = "Title"
+      @msg = "Type Here..."
+      @value = ''
+
+      # for CheckBox
+      # if params['input1']
+      #     @message = 'You Checked-1!'
     #   else
     #     @message = 'Not Checked!'
     #   # @message = 'You typed:' + params['input1']
@@ -26,12 +30,12 @@ class HelloController < ApplicationController
     #   @title = 'Index Page'
     #   @message = 'Check it...!'
     #   # @value = ''
-    # end
+    end
 
   end
 
   def other
-    redirect_to action: :index, params: {'msg': 'welcome! from other page'}
+    redirect_to action: :index, params: {'msg': 'Come to Other Page'}
   end
 
 end

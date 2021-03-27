@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,14 +14,19 @@
     />
     <title>Document</title>
   </head>
+
   <body>
     <div class="container">
       <div class="row">
         <h1>first_vue</h1>
         <div id="app">
           <p>{{ msg }}</p>
+          <p>{{ msg2 }}</p>
           <button v-on:click="changeMsg" class="btn btn-primary">Change</button>
         </div>
+      </div>
+      <div class="row">
+        <p>$data</p>
       </div>
     </div>
 
@@ -30,6 +36,15 @@
         data() {
           return {
             msg: 'Hello',
+            msg2: 'Hello2',
+            lists: [
+              {
+                title: 'title-1',
+              },
+              {
+                title: 'title-2',
+              },
+            ],
           }
         },
         mounted() {
@@ -41,6 +56,8 @@
           },
           changeMsg() {
             this.msg = 'Change Msg'
+            // this.msg2 = this.lists[0]['title']
+            axios.get('/data/snippets.json/').then((res) => (this.msg2 = this.lists[0]['title']))
           },
         },
       })

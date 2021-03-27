@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h1>first_vue</h1>
+        <div id="app">
+          <p>{{ msg }}</p>
+          <button v-on:click="changeMsg" class="btn btn-primary">Change</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            msg: 'Hello',
+          }
+        },
+        mounted() {
+          this.setMsg()
+        },
+        methods: {
+          setMsg() {
+            this.msg = 'Set New Message'
+          },
+          changeMsg() {
+            this.msg = 'Change Msg'
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

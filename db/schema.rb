@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_03_27_141717) do
 
-  create_table "snippets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "snippets", force: :cascade do |t|
     t.string "title"
     t.string "language"
     t.string "contents"

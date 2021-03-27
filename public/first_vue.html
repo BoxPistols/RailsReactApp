@@ -12,21 +12,27 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <title>Vue Rails</title>
   </head>
 
   <body>
-    <div class="container">
-      <div class="row">
-        <h1>first_vue</h1>
-        <div id="app">
-          <p>{{ msg }}</p>
-          <p>{{ msg2 }}</p>
-          <button v-on:click="changeMsg" class="btn btn-primary">Change</button>
+    <div id="app">
+      <div class="container">
+        <div class="row mt-4">
+        <div class="col"><h1>first_vue</h1></div>
+          <div class="col">
+            <p>{{ msg }}</p>
+            <p>{{ msg2 }}</p>
+            <button v-on:click="changeMsg" class="btn btn-primary">Change</button>
+          </div>
+
+          <div class="col">
+            <ul>
+              <li v-for="data in lists">{{ data.title }}</li>
+            </ul>
+            <button v-on:click="listSnippet" class="btn btn-primary">listSnippet</button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <p>$data</p>
       </div>
     </div>
 
@@ -39,10 +45,10 @@
             msg2: 'Hello2',
             lists: [
               {
-                title: 'title-1',
+                title: 'title-local-1',
               },
               {
-                title: 'title-2',
+                title: 'title-local-2',
               },
             ],
           }
@@ -57,7 +63,10 @@
           changeMsg() {
             this.msg = 'Change Msg'
             // this.msg2 = this.lists[0]['title']
-            axios.get('/data/snippets.json/').then((res) => (this.msg2 = this.lists[0]['title']))
+            axios.get('/snippets.json/').then((res) => (this.msg2 = this.lists[1]['title']))
+          },
+          listSnippet() {
+            axios.get('/snippets.json').then((res) => (this.lists = res.data))
           },
         },
       })

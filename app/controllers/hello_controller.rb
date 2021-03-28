@@ -1,5 +1,5 @@
 class HelloController < ApplicationController
-  protect_from_forgery
+  #protect_from_forgery
 
   def index
 

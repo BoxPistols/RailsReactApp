@@ -16,6 +16,17 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
+<%# <form method="POST" action="/hello" > %>
+  <%# <input type="text" name="input1" value="<%= @value %>
+  <%# <input type="submit" > %>
+<%# </form> %>
+
+
+<% form_tag(controller: "hello", action: "index") do %>
+  <%= text_field_tag("input1") %>
+  <%= submit_tag("送信する") %>
+<% end %>
+
 
     <%
 =begin%>

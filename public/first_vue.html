@@ -98,7 +98,7 @@
                     this.msg = 'Change Msg'
                     // this.msg2 = this.lists[0]['title']
                     axios.get('/snippets.json/')
-                        .then((res) => (this.msg2 = this.lists[1]['title']))
+                        .then((res) => (this.msg2 = this.lists[0]['title']))
                 },
                 listSnippet() {
                     axios.get('/snippets.json')

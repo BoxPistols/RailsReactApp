@@ -1,75 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="ja">
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
     <title>Vue Rails</title>
-  </head>
+    <style>
+      .code {
+        background: #234;
+        color: ghostwhite;
+        padding: 12px;
+        position: fixed;
+        bottom: 12px;
+        right: 12px;
+        opacity: 0.85;
+      }
+      .container {
+        padding: 32px;
+      }
+      .row {
+        max-width: 960px;
+        margin: 0 auto 48px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid #eee;
+      }
+      .btn {
+        margin: 12px 0;
+        float: right;
+      }
+    </style>
+</head>
 
-  <body>
+<body>
     <div id="app">
-      <div class="container">
-        <div class="row mt-4">
-        <div class="col"><h1>first_vue</h1></div>
-          <div class="col">
-            <p>{{ msg }}</p>
-            <p>{{ msg2 }}</p>
-            <button v-on:click="changeMsg" class="btn btn-primary">Change</button>
-          </div>
+        <div class="container">
+            <h1>first_vue</h1>
+            <p class="code">{{ $data }}</p>
+            <div class="row">
+                <div class="col">
+                    <p>{{ msg }}</p>
+                    <p>{{ msg2 }}</p>
+                    <button v-on:click="changeMsg" class="btn btn-outline-info">Change</button>
+                </div>
+            </div>
 
-          <div class="col">
-            <ul>
-              <li v-for="data in lists">{{ data.title }}</li>
-            </ul>
-            <button v-on:click="listSnippet" class="btn btn-primary">listSnippet</button>
-          </div>
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li v-for="data in lists">{{ data.title }} / {{ data.language }} </li>
+                    </ul>
+                    <button v-on:click="listSnippet" class="btn btn-outline-info">listSnippet</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <input v-model="title" placeholder="title"> <!-- 説明 2.23 -->
+                        <input v-model="language" placeholder="language">
+                        <input v-model="contents" placeholder="contents">
+                    </div>
+                    <button v-on:click="postSnippet" class="btn btn-outline-info">postSnippet</button>                    
+                </div>
+            </div>
+
         </div>
-      </div>
     </div>
 
     <script>
-      new Vue({
-        el: '#app',
-        data() {
-          return {
-            msg: 'Hello',
-            msg2: 'Hello2',
-            lists: [
-              {
-                title: 'title-local-1',
-              },
-              {
-                title: 'title-local-2',
-              },
-            ],
-          }
-        },
-        mounted() {
-          this.setMsg()
-        },
-        methods: {
-          setMsg() {
-            this.msg = 'Set New Message'
-          },
-          changeMsg() {
-            this.msg = 'Change Msg'
-            // this.msg2 = this.lists[0]['title']
-            axios.get('/snippets.json/').then((res) => (this.msg2 = this.lists[1]['title']))
-          },
-          listSnippet() {
-            axios.get('/snippets.json').then((res) => (this.lists = res.data))
-          },
-        },
-      })
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'Hello',
+                    msg2: 'Hello2',
+                    lists: [{
+                        title: 'title-local-1',
+                        title: 'title-local-2'
+                    }],
+                    title: 'new title',
+                    language: 'Ruby',
+                    contents: 'contents'
+                }
+            },
+            mounted() {
+                this.setMsg()
+            },
+            methods: {
+                setMsg() {
+                    this.msg = 'Set New Message'
+                },
+                changeMsg() {
+                    this.msg = 'Change Msg'
+                    // this.msg2 = this.lists[0]['title']
+                    axios.get('/snippets.json/')
+                        .then((res) => (this.msg2 = this.lists[1]['title']))
+                },
+                listSnippet() {
+                    axios.get('/snippets.json')
+                        .then((res) => (this.lists = res.data))
+                  },
+                // 固定の値をPostするテスト
+                /* postSnippet() {
+                    axios.post('/snippets.json', {
+                            title: 'New Title Post', language: 'New Language Post', contents: 'New Post Contensts'})
+                              .then(res => (this.listSnippet())
+                        )
+                      }
+                */
+                postSnippet() {
+                    axios.post('/snippets.json', {
+                            title: this.title,
+                            language: this.language,
+                            contents: this.contents
+                        })
+                        .then(res => (
+                            this.listSnippet() = res.data
+                        ));
+                }
+            }
+        })
     </script>
-  </body>
+</body>
+
 </html>

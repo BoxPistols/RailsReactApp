@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :snippets
-  root 'snippets#index'
+  root 'hello#index'
 
   get 'hello/index'
   get 'hello', to: 'hello#index'

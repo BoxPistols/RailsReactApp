@@ -41,7 +41,8 @@
 							</div>
 							<v-card-actions>								
 								<v-btn flat color="red" v-on:click="togglePutModal(snippet.id)">Update</v-btn>
-								<v-btn flat color="gray">Delete</v-btn>
+								<!-- <v-btn flat color="gray">Delete</v-btn> -->
+								<v-btn flat color="gray" v-on:click="toggleDeleteModal()">Delete</v-btn>
 							</v-card-actions>
 						</v-card>
 					</v-flex>
@@ -162,7 +163,7 @@
 						this.postLanguage = ''
 						this.postContents = ''						
 	        		})
-					this.dialogPostFlag = !this.dialogPostFlag // 説明 3.22
+					this.dialogPostFlag = !this.dialogPostFlag
 	        	},
 	        	togglePutModal (id) {
 	        		axios.get('/snippets/' + id + '.json')
@@ -179,6 +180,9 @@
 	        			this.listSnippet()
 		        	})
 	        		this.dialogPutFlag = !this.dialogPutFlag
+		        },
+		        toggleDeleteModal() {
+		        	console.log("XXX")
 		        }
 			}
 		})

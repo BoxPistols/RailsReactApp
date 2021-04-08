@@ -39,43 +39,4 @@ https://atit.gitbook.io/rails/dbnorais6
 
 # QA-Servrice
 
-## Create Controller
-
-`rails g controller questions index show new edit`
-
-```ruby
-create app / controllers / questions_controller.rb
-
-route get 'questions/index'
-get 'questions/show'
-get 'questions/new'
-get 'questions/edit'
-
-invoke erb
-
-create app / views / questions
-create app / views / questions / index.html.erb
-create app / views / questions / show.html.erb
-create app / views / questions / new.html.erb
-create app / views / questions / edit.html.erb
-
-invoke test_unit
-create test / controllers / questions_controller_test.rb
-
-invoke helper
-create app / helpers / questions_helper.rb
-invoke test_unit
-
-invoke assets
-invoke scss
-create app / assets / stylesheets / questions.scss
-```
-
-routes.rb
-
-```ruby
-get 'questions/index'
-get 'questions/show'
-get 'questions/new'
-get 'questions/edit'
-```
+[QA-Servrice Index](https://app.gitbook.com/@atit/s/rails/~/drafts/-MXmmQ-lNYoky-gwsEgv/zero-one-qa-service/qa-servrice-index)

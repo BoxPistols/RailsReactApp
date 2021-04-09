@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  get 'questions/index'
-  get 'questions/show'
-  get 'questions/new'
-  get 'questions/edit'
+  # get 'questions/index'
+  # get 'questions/show'
+  # get 'questions/new'
+  # get 'questions/edit'
+  root 'questions#index'
+
+  resources :questions
 
   resources :snippets
-  root 'hello#index'
 
   get 'hello/index'
   get 'hello', to: 'hello#index'

@@ -40,3 +40,9 @@ https://atit.gitbook.io/rails/dbnorais6
 # QA-Servrice
 
 [QA-Servrice Index](https://app.gitbook.com/@atit/s/rails/~/drafts/-MXmmQ-lNYoky-gwsEgv/zero-one-qa-service/qa-servrice-index)
+
+---
+
+# Add Vue on Rails
+
+[Docs on GitBook](https://app.gitbook.com/@atit/s/rails/~/drafts/-MY-Ep1yAsy1Sps1l1D8/rails-vue/add-vue-on-rails)

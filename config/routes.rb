@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :questions
 
+  get 'snippets/app'
   resources :snippets
 
   get 'hello/index'

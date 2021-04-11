@@ -1,0 +1,10 @@
+{
+  "include": ["./app/**/*", "./public/**/*"],
+  "compilerOptions": {
+    "module": "es2015",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/*"]
+    }
+  }
+}

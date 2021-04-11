@@ -1,3 +1,4 @@
+<!-- snippets-cards -->
 <template>
   <div>
     <v-card style="margin-top: 10px;" v-for="snippets in snippetCards" :key="snippets.index">

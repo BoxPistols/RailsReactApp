@@ -1,3 +1,4 @@
+<!-- app -->
 <template>
   <v-app id="app">
     <snippets-header />
@@ -24,11 +25,10 @@
 <script>
 import SnippetsHeader from './packs/components/snippets-header'
 import SnippetsCards from './packs/components/snippets-cards'
+
 export default {
   data: function () {
-    return {
-      title: 'Hello Vue on Rails!',
-    }
+    return {}
   },
   components: {
     SnippetsHeader,

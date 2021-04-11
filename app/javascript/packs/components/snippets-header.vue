@@ -1,6 +1,6 @@
+<!-- snippets-header -->
 <template>
   <div>
-    <!-- header // -->
     <v-card flat tile>
       <v-toolbar color="blue lighten-4" dense>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -9,29 +9,28 @@
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn icon>
+        <!-- <v-btn icon>
           <v-icon>mdi-heart</v-icon>
-        </v-btn>
-        <v-btn>New Snippet</v-btn>
+        </v-btn>-->
+        <SnippetsDialogNew />
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
     </v-card>
-    <!-- /header -->
   </div>
 </template>
 
 <script>
-// import SnippetsHeader from './packs/components/snippets-header'
+import SnippetsDialogNew from './snippets-dialog-new'
 export default {
   data: function () {
     return {
-      title: 'Hello Vue on Rails!',
+      title: 'Snippets App Vue on Rails',
     }
   },
   components: {
-    // SnippetsHeader,
+    SnippetsDialogNew,
   },
 }
 </script>

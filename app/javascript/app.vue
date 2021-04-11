@@ -37,9 +37,28 @@ export default {
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
+<style scoped lang="scss">
+$bgColor: #4c4a6f;
+
+.theme--dark {
+  /deep/ .v-application--wrap {
+    background-color: $bgColor;
+  }
+  /deep/ .v-card {
+    background-color: darken($bgColor, 10%);
+  }
+}
+/deep/ .v-application--wrap {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-top: 60px;
+}
+/deep/ .c-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  opacity: 0.95;
 }
 </style>

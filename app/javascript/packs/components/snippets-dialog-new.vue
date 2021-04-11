@@ -1,7 +1,7 @@
 <!-- snippets-dialog-new -->
 <template>
   <div>
-    <v-dialog v-model="dialog" transition="dialog-bottom-transition">
+    <v-dialog v-model="dialog" width="800">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
       </template>
@@ -25,7 +25,6 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-divider></v-divider>
       </v-card>
     </v-dialog>
   </div>

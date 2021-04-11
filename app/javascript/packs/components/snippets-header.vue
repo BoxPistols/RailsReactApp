@@ -1,8 +1,8 @@
 <!-- snippets-header -->
 <template>
-  <div>
+  <div class="c-header">
     <v-card flat tile>
-      <v-toolbar color="blue lighten-4" dense>
+      <v-toolbar color="blue lighten-2" dense>
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
         <v-toolbar-title>{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>

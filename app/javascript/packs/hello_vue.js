@@ -12,7 +12,25 @@ import "./hello_vue.scss"; // 追加
 import App from "../app.vue";
 
 Vue.use(Vuetify); // 追加
-const vuetify = new Vuetify(); // 追加
+// const vuetify = new Vuetify(); // 追加
+
+// color: https://vuetifyjs.com/ja/features/theme
+const vuetify = new Vuetify({
+  theme: {
+    dark: true,
+    themes: {
+      dark: {
+        primary: "#1976D2",
+        secondary: "#424242",
+        accent: "#82B1FF",
+        error: "#FF5252",
+        info: "#2196F3",
+        success: "#4CAF50",
+        warning: "#FFC107",
+      },
+    },
+  },
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({

@@ -12,10 +12,10 @@
         <v-btn icon>
           <v-icon>mdi-heart</v-icon>
         </v-btn>
+        <v-btn>New Snippet</v-btn>
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
-        <v-btn>New Snippet</v-btn>
       </v-toolbar>
     </v-card>
     <!-- /header -->

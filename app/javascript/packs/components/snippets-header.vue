@@ -15,7 +15,7 @@
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
-        <v-btn flat v-on:click="togglePostModal">New Snippet</v-btn>
+        <v-btn>New Snippet</v-btn>
       </v-toolbar>
     </v-card>
     <!-- /header -->

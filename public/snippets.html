@@ -1,300 +1,365 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@1.5/dist/vuetify.min.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@1.5/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@1.5/dist/vuetify.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <title>Snippet App</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <v-app id="app">
-        <!-- header // -->
-        <v-toolbar color="red lighten-2" dark>
-            <v-toolbar-title>Snippet App</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn flat v-on:click="togglePostModal">New Snippet</v-btn>
-        </v-toolbar>
-        <!-- // header -->
-        <v-container style="height: 1000px; max-width: 2400px">
-            <v-layout>
-                <!-- Left Content // -->
-                <v-flex xs5>
-                    <div style="margin: 12px">
-                        <h2>Snippets Shortcut</h2>
-                        <!--
+      <!-- header // -->
+      <v-toolbar color="red lighten-2" dark>
+        <v-toolbar-title>Snippet App</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn flat v-on:click="togglePostModal">New Snippet</v-btn>
+      </v-toolbar>
+      <!-- // header -->
+      <v-container style="height: 1000px; max-width: 2400px;">
+        <v-layout>
+          <!-- Left Content // -->
+          <v-flex xs5>
+            <div style="margin: 12px;">
+              <h2>Snippets Shortcut</h2>
+              <!--
 													- v-select: 言語選択
 														- v-model='language': 選択した結果の値を代入する変数の紐付け
 														- :items="languages": 選択候補の一覧を指定する配列
 														- label="Language": セレクトボックスのラベル
 												-->
-                        <v-select v-model='language' :items="languages" label="Language" v-on:change="abstruct"></v-select>
-                        <ul>
-                            <li v-for="snippet in snippetList"><span id='name' v-on:click="goElem(snippet.id)">[{{ snippet.language }}] {{ snippet.title }}</span></li>
-                        </ul>
-                    </div>
-                </v-flex>
-                </ul>
-                </div>
-                </v-flex>
-                <!-- // Left Content -->
-
-                <!-- Right Content // -->
-                <v-flex xs7>
-                    <v-card style="margin-top: 10px" v-for="snippet in snippetList">
-                        <!-- Card Title -->
-                        <v-card-title primary-title>
-                            <a v-bind:id='snippet.id'></a>
-                            <h3 class="headline">{{snippet.id}}: {{ snippet.title }}</h3>
-                        </v-card-title>
-                        <!-- Card TextArea -->
-                        <div style="margin: 10px 20px">
-                            <textarea>{{ snippet.contents }}</textarea>
-                        </div>
-                        <!-- Card Button Actions -->
-                        <v-card-actions>
-                            <v-btn flat color="red" v-on:click="togglePutModal(snippet.id)">Update</v-btn>
-                            <v-btn flat color="gray" v-on:click="toggleDeleteModal(snippet.id)">Delete</v-btn>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="red" v-on:click="goTop">Go Top</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-flex>
-                <!-- // Right Content -->
-            </v-layout>
-
-            <!-- Dialog Post // -->
-            <v-dialog v-model="dialogPostFlag" width="800" _persistent>
-                <v-card>
-                    <v-card-title class="headline red lighten-3 white--text" primary-title>
-                        Create Form
-                    </v-card-title>
-                    <v-text-field v-model="postTitle" label="Snippet Title" required style="margin: 20px; margin-top: 30px"></v-text-field>
-                    <v-flex d-flex>
-                        <v-text-field v-model="postLanguage" label="Language" required style="margin: 20px; margin-bottom: 0px; margin-left: 20px"></v-text-field>
-                        <v-select v-model='postLanguage' :items="languagesForEdit" label="Select from history" class="select-language"></v-select>
-                    </v-flex>
-                    <v-card-text>
-                        <p>Snippet</p>
-                        <div style="width: 100%">
-                            <textarea v-model="postContents" class="textarea-post-dialog"></textarea>
-                        </div>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-btn color="#grey lighten-4" flat v-on:click="togglePostModal">
-                            Cancel
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red" flat v-on:click="postSnippet">
-                            Add Snippet
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <!-- // Dialog Post -->
-
-            <!-- Dialog UpDate // -->
-
-            <v-dialog v-model="dialogPutFlag" width="800" _persistent>
-                <v-card>
-                    <v-card-title class="headline red lighten-3 white--text" primary-title>
-                        Edit Form
-                    </v-card-title>
-
-                    <v-text-field v-model="putTitle" label="Snippet Title" required style="margin: 20px; margin-top: 30px"></v-text-field>
-
-                    <v-flex d-flex>
-                        <v-text-field v-model="putLanguage" label="Language" required style="margin: 20px; margin-bottom: 0px; margin-left: 20px"></v-text-field>
-                    </v-flex>
-
-                    <v-card-text>
-                        <p>Snippet</p>
-                        <div style="width: 100%">
-                            <textarea style="
-                    width: 100%;
+              <v-select
+                v-model="language"
+                :items="languages"
+                label="Language"
+                v-on:change="abstruct"
+              ></v-select>
+              <ul>
+                <li v-for="snippet in snippetList">
+                  <span id="name" v-on:click="goElem(snippet.id)"
+                    >[{{ snippet.language }}] {{ snippet.title }}</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </v-flex>
+          <!-- // Left Content -->
+          <!-- Right Content // -->
+          <v-flex xs7>
+            <v-card style="margin-top: 10px;" v-for="snippet in snippetList">
+              <!-- Card Title -->
+              <v-card-title primary-title>
+                <a v-bind:id="snippet.id"></a>
+                <h3 class="headline">{{snippet.id}}: {{ snippet.title }}</h3>
+              </v-card-title>
+              <!-- Card TextArea -->
+              <div style="margin: 10px; padding: 12px;">
+                <textarea
+                  style="
+                    width: 90%;
+                    min-height: 240px;
+                    background-color: #efefef;
+                    padding: 12px;
+                  "
+                >
+{{ snippet.contents }}
+                </textarea>
+              </div>
+              <!-- Card Button Actions -->
+              <v-card-actions>
+                <v-btn flat color="red" v-on:click="togglePutModal(snippet.id)"
+                  >Update</v-btn
+                >
+                <v-btn
+                  flat
+                  color="gray"
+                  v-on:click="toggleDeleteModal(snippet.id)"
+                  >Delete</v-btn
+                >
+                <v-spacer></v-spacer>
+                <v-btn flat color="red" v-on:click="goTop">Go Top</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+          <!-- // Right Content -->
+        </v-layout>
+        <!-- Dialog Post // -->
+        <v-dialog v-model="dialogPostFlag" width="800" _persistent>
+          <v-card>
+            <v-card-title
+              class="headline red lighten-3 white--text"
+              primary-title
+            >
+              Create Form
+            </v-card-title>
+            <v-text-field
+              v-model="postTitle"
+              label="Snippet Title"
+              required
+              style="margin: 20px; margin-top: 30px;"
+            >
+            </v-text-field>
+            <v-flex d-flex>
+              <v-text-field
+                v-model="postLanguage"
+                label="Language"
+                required
+                style="margin: 20px; margin-bottom: 0px; margin-left: 20px;"
+              ></v-text-field>
+              <v-select
+                v-model="postLanguage"
+                :items="languagesForEdit"
+                label="Select from history"
+                class="select-language"
+              ></v-select>
+            </v-flex>
+            <v-card-text>
+              <p>Snippet</p>
+              <div style="width: 100%;">
+                <textarea
+                  v-model="postContents"
+                  class="textarea-post-dialog"
+                ></textarea>
+              </div>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn color="#grey lighten-4" flat v-on:click="togglePostModal">
+                Cancel
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="red" flat v-on:click="postSnippet">
+                Add Snippet
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- // Dialog Post -->
+        <!-- Dialog UpDate // -->
+        <v-dialog v-model="dialogPutFlag" width="800" _persistent>
+          <v-card>
+            <v-card-title
+              class="headline red lighten-3 white--text"
+              primary-title
+            >
+              Edit Form
+            </v-card-title>
+            <v-text-field
+              v-model="putTitle"
+              label="Snippet Title"
+              required
+              style="margin: 20px; margin-top: 30px;"
+            >
+            </v-text-field>
+            <v-flex d-flex>
+              <v-text-field
+                v-model="putLanguage"
+                label="Language"
+                required
+                style="margin: 20px; margin-bottom: 0px; margin-left: 20px;"
+              ></v-text-field>
+            </v-flex>
+            <v-card-text>
+              <p>Snippet</p>
+              <div style="width: 100%;">
+                <textarea
+                  style="
+                    min-width: 100%;
                     height: 300px;
                     background-color: #efefef;
                     padding: 3px;
-                  " v-model="putContents"></textarea>
-                        </div>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-btn color="#grey lighten-4" flat v-on:click="togglePutModal">
-                            Cancel
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red" flat v-on:click="putSnippet">
-                            Update Snippet
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <!-- // Dialog UpDate -->
-
-            <!-- Dialog Delete // -->
-            <v-dialog v-model="dialogDeleteFlag" width="400">
-                <v-card>
-                    <v-card-title class="headline red lighten-3 white--text" primary-title>
-                        Confirm
-                    </v-card-title>
-                    <v-spacer></v-spacer>
-                    <v-card-text>
-                        <p>本当に削除してもよろしいですか？</p>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red" flat v-on:click="deleteSnippet()">
-                            Delete
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <!-- // Dialog Delete -->
-        </v-container>
+                  "
+                  v-model="putContents"
+                ></textarea>
+              </div>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn color="#grey lighten-4" flat v-on:click="togglePutModal">
+                Cancel
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="red" flat v-on:click="putSnippet">
+                Update Snippet
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- // Dialog UpDate -->
+        <!-- Dialog Delete // -->
+        <v-dialog v-model="dialogDeleteFlag" width="400">
+          <v-card>
+            <v-card-title
+              class="headline red lighten-3 white--text"
+              primary-title
+            >
+              Confirm
+            </v-card-title>
+            <v-spacer></v-spacer>
+            <v-card-text>
+              <p>本当に削除してもよろしいですか？</p>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-btn
+                color="#grey lighten-4"
+                flat
+                v-on:click="toggleDeleteModal"
+              >
+                Cancel
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="red" flat v-on:click="deleteSnippet()">
+                Delete
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <!-- // Dialog Delete -->
+      </v-container>
     </v-app>
-
     <script>
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    // Init Get
-                    snippetList: [''],
-                    allData: [''],
-                    // Post
-                    dialogPostFlag: false,
-                    postTitle: '',
-                    postLanguage: '',
-                    postContents: '',
-                    // UpDate
-                    dialogPutFlag: false,
-                    putTitle: '',
-                    putLanguage: '',
-                    putContents: '',
-                    // Delete
-                    dialogDeleteFlag: false,
-                    // Select Filter
-                    languages: ['All'],
-                    language: 'ALL',
-                    languagesForEdit: [],
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            // Init Get
+            snippetList: [""],
+            allData: [""],
+            // Post
+            dialogPostFlag: false,
+            postTitle: "",
+            postLanguage: "",
+            postContents: "",
+            // UpDate
+            dialogPutFlag: false,
+            putTitle: "",
+            putLanguage: "",
+            putContents: "",
+            // Delete
+            dialogDeleteFlag: false,
+            // Select Filter
+            languages: ["All"],
+            language: "ALL",
+            languagesForEdit: [],
+          };
+        },
+        mounted() {
+          this.listSnippet();
+        },
+        methods: {
+          listSnippet() {
+            axios.get("/snippets.json").then((response) => {
+              this.allData = response.data;
+              this.snippetList = this.allData;
+              this.listLanguages(); // セレクトボックスで選択した言語と一致するメソッドの呼び出し
+              this.abstruct();
+            });
+          },
+          // Select Filter
+          listLanguages: function () {
+            this.languages = [];
+            this.languagesForEdit = [];
+            this.languages.push("ALL");
+            for (i = 0; i < this.allData.length; i++) {
+              // indexOf 関数では str1.indexOf(str2) と記述することで
+              // str2 の文字列が str1 の何文字目で一致するかを返し、一致しない場合は -1 と返す
+              // ここでは this.languages.indexOf(this.allData[i].language) == -1 とすることで、文字列の部分一致を判定しています。
+              if (this.languages.indexOf(this.allData[i].language) == -1) {
+                this.languages.push(this.allData[i].language);
+                this.languagesForEdit.push(this.allData[i].language);
+              }
+            }
+          },
+          togglePostModal() {
+            this.dialogPostFlag = !this.dialogPostFlag;
+          },
+          postSnippet() {
+            axios
+              .post("/snippets.json", {
+                title: this.postTitle,
+                language: this.postLanguage,
+                contents: this.postContents,
+              })
+              .then((response) => {
+                this.listSnippet();
+                this.postTitle = "";
+                this.postLanguage = "";
+                this.postContents = "";
+              });
+            this.dialogPostFlag = !this.dialogPostFlag;
+          },
+          togglePutModal(id) {
+            axios.get("/snippets/" + id + ".json").then((response) => {
+              this.putTitle = response.data.title;
+              this.putLanguage = response.data.language;
+              this.putContents = response.data.contents;
+            });
+            this.id = id;
+            this.dialogPutFlag = !this.dialogPutFlag;
+          },
+          putSnippet() {
+            axios
+              .put("/snippets/" + this.id + ".json", {
+                title: this.putTitle,
+                language: this.putLanguage,
+                contents: this.putContents,
+              })
+              .then((response) => {
+                this.listSnippet();
+              });
+            this.dialogPutFlag = !this.dialogPutFlag;
+          },
+          deleteSnippet() {
+            axios.delete("/snippets/" + this.id + ".json").then((response) => {
+              this.listSnippet();
+            });
+            this.dialogDeleteFlag = !this.dialogDeleteFlag;
+          },
+          toggleDeleteModal(id) {
+            this.id = id;
+            this.dialogDeleteFlag = !this.dialogDeleteFlag;
+          },
+          goElem: function (id) {
+            document.getElementById(id).scrollIntoView(true);
+          },
+          goTop: function () {
+            document.getElementById("app").scrollIntoView(true);
+          },
+          // ここから追記する
+          abstruct: function () {
+            if (this.language == "ALL") {
+              // 'All' を選択した場合に全ての言語が抽出対象となるように指定
+              this.snippetList = [];
+              for (i = 0; i < this.allData.length; i++) {
+                // allData の配列に含まれす配列の要素の数だけ、反復処理する
+                this.snippetList.push(this.allData[i]); // その allData の各要素を1つづつ空配列だった snippetList に追加する
+              }
+            } else if (this.language != "") {
+              // 言語の選択がある場合は抽出対象となるように指定
+              this.snippetList = [];
+              for (i = 0; i < this.allData.length; i++) {
+                // 検索機能の実装のため
+                if (this.allData[i].language == this.language) {
+                  // 言語の選択がある場合は抽出対象となるように指定
+                  this.snippetList.push(this.allData[i]);
                 }
-            },
-            mounted() {
-                this.listSnippet()
-            },
-            methods: {
-                listSnippet() {
-                    axios.get('/snippets.json').then((response) => {
-                        this.allData = response.data
-                        this.snippetList = this.allData
-                        this.listLanguages(); // セレクトボックスで選択した言語と一致するメソッドの呼び出し
-                        this.abstruct();
-                    })
-                },
-                // Select Filter
-                listLanguages: function() {
-                    this.languages = []
-                    this.languagesForEdit = []
-                    this.languages.push('ALL')
-                    for (i = 0; i < this.allData.length; i++) {
-                        // indexOf 関数では str1.indexOf(str2) と記述することで
-                        // str2 の文字列が str1 の何文字目で一致するかを返し、一致しない場合は -1 と返す
-                        // ここでは this.languages.indexOf(this.allData[i].language) == -1 とすることで、文字列の部分一致を判定しています。
-                        if (this.languages.indexOf(this.allData[i].language) == -1) {
-                            this.languages.push(this.allData[i].language)
-                            this.languagesForEdit.push(this.allData[i].language)
-                        }
-                    }
-                },
-                togglePostModal() {
-                    this.dialogPostFlag = !this.dialogPostFlag
-                },
-                postSnippet() {
-                    axios
-                        .post('/snippets.json', {
-                            title: this.postTitle,
-                            language: this.postLanguage,
-                            contents: this.postContents,
-                        })
-                        .then((response) => {
-                            this.listSnippet()
-                            this.postTitle = ''
-                            this.postLanguage = ''
-                            this.postContents = ''
-                        })
-                    this.dialogPostFlag = !this.dialogPostFlag
-                },
-                togglePutModal(id) {
-                    axios.get('/snippets/' + id + '.json').then((response) => {
-                        this.putTitle = response.data.title
-                        this.putLanguage = response.data.language
-                        this.putContents = response.data.contents
-                    })
-                    this.id = id
-                    this.dialogPutFlag = !this.dialogPutFlag
-                },
-                putSnippet() {
-                    axios
-                        .put('/snippets/' + this.id + '.json', {
-                            title: this.putTitle,
-                            language: this.putLanguage,
-                            contents: this.putContents,
-                        })
-                        .then((response) => {
-                            this.listSnippet()
-                        })
-                    this.dialogPutFlag = !this.dialogPutFlag
-                },
-                deleteSnippet() {
-                    axios.delete('/snippets/' + this.id + '.json').then((response) => {
-                        this.listSnippet()
-                    })
-                    this.dialogDeleteFlag = !this.dialogDeleteFlag
-                },
-                toggleDeleteModal(id) {
-                    this.id = id
-                    this.dialogDeleteFlag = !this.dialogDeleteFlag
-                },
-                goElem: function(id) {
-                    document.getElementById(id).scrollIntoView(true)
-                },
-                goTop: function() {
-                    document.getElementById("app").scrollIntoView(true)
-                },
-                // ここから追記する
-                abstruct: function() {
-                    if (this.language == 'ALL') { // 'All' を選択した場合に全ての言語が抽出対象となるように指定
-                        this.snippetList = []
-                        for (i = 0; i < this.allData.length; i++) { // allData の配列に含まれす配列の要素の数だけ、反復処理する
-                            this.snippetList.push(this.allData[i]) // その allData の各要素を1つづつ空配列だった snippetList に追加する
-                        }
-                    } else if (this.language != '') { // 言語の選択がある場合は抽出対象となるように指定
-                        this.snippetList = []
-                        for (i = 0; i < this.allData.length; i++) { // 検索機能の実装のため
-                            if (this.allData[i].language == this.language) { // 言語の選択がある場合は抽出対象となるように指定
-                                this.snippetList.push(this.allData[i])
-                            }
-                        }
-                    }
-                }
-                // ここまで追記する
-            },
-        })
+              }
+            }
+          },
+          // ここまで追記する
+        },
+      });
     </script>
-</body>
-
+  </body>
 </html>

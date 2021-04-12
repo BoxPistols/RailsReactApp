@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }).$mount();
   document.body.appendChild(app.$el);
 
-  console.log(app);
+  // console.log(app);
 });
 
 // The above code uses Vue without the compiler, which means you cannot

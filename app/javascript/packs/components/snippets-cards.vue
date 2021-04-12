@@ -1,6 +1,6 @@
 <!-- snippets-cards -->
 <template>
-  <div>
+  <v-row>
     <v-card style="margin-top: 10px;" v-for="snippets in snippetCards" :key="snippets.index">
       <v-card-title primary-title>
         <h3 class="headline">{{ snippets.title }}</h3>
@@ -14,7 +14,7 @@
         </v-card-actions>
       </div>
     </v-card>
-  </div>
+  </v-row>
 </template>
 
 <script>

@@ -3,20 +3,20 @@
   <v-app id="app">
     <snippets-header />
     <!-- layout -->
-    <v-container style="height: 1000px; max-width: 2400px;">
-      <v-layout>
-        <v-flex xs4>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="4">
           <div style="margin: 10px;">
             <h2>Snippets Shortcut</h2>
             <ul>
               <li>Snippet Title</li>
             </ul>
           </div>
-        </v-flex>
-        <v-flex xs8>
+        </v-col>
+        <v-col cols="12" md="8">
           <snippets-cards />
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
     <!-- /layout -->
   </v-app>
@@ -52,13 +52,17 @@ $bgColor: #4c4a6f;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-top: 60px;
+  min-width: 100vw;
 }
 /deep/ .c-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100vw;
   z-index: 10;
   opacity: 0.95;
+  .v-toolbar__content {
+    padding: 0px;
+    > .v-btn.v-btn--icon {
+      margin: 0;
+    }
+  }
 }
 </style>
